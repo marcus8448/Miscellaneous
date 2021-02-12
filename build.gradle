@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.cadixdev.licenser' version '0.5.0'
+}
+
+group 'io.github.marcus8448'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass.set('io.github.marcus8448.miscellaneous.Main')
+}
+
+license {
+    header = project.file('LICENSE_HEADER.txt')
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
