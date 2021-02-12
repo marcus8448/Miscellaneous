@@ -17,6 +17,7 @@
 
 package io.github.marcus8448.miscellaneous;
 
+import io.github.marcus8448.miscellaneous.minecraft.FabricProjectGenerator;
 import io.github.marcus8448.miscellaneous.minecraft.model.ModelGenerator;
 import io.github.marcus8448.miscellaneous.misc.remapper.PackageMover;
 import io.github.marcus8448.miscellaneous.pixelart.Enlarge;
@@ -29,7 +30,8 @@ public enum RunMode {
     ENLARGE_PIXEL_ART(Enlarge::enlarge),
     SHRINK_PIXEL_ART(Shrink::shrink),
     GENERATE_MODELS(ModelGenerator::run),
-    MOVE_COMMENTED_CLASSES(PackageMover::move);
+    MOVE_COMMENTED_CLASSES(PackageMover::move),
+    GENERATE_FABRIC(FabricProjectGenerator::generate);
 
     private final Consumer<String[]> creator;
 
