@@ -34,7 +34,7 @@ public class FabricProjectGenerator {
             delete(file);
             System.out.println("Cloning...");
             Process process = Runtime.getRuntime().exec("git clone https://github.com/marcus8448/fabric-starter.git");
-            process.onExit().get();
+            process.waitFor();
             System.out.println("Cloned.");
             delete(new File("fabric-starter/.git/"));
 
@@ -45,8 +45,8 @@ public class FabricProjectGenerator {
                 File file1 = queue.poll();
                 File tmp;
                 if (file1.isDirectory()) {
-                    if (file1.getName().contains("modid")) {
-                        tmp = new File(file1.getParent() + "/" + file1.getName().replace("modid", modid));
+                    if (file1.getName().contains("mod_id")) {
+                        tmp = new File(file1.getParent() + "/" + file1.getName().replace("mod_id", modid));
                         file1.renameTo(tmp);
                         file1 = tmp;
                     }
@@ -54,8 +54,8 @@ public class FabricProjectGenerator {
                         queue.addAll(Arrays.asList(Objects.requireNonNull(file1.listFiles())));
                     }
                 } else {
-                    if (file1.getName().contains("modid")) {
-                        tmp = new File(file1.getParent() + "/" + file1.getName().replace("modid", modid));
+                    if (file1.getName().contains("mod_id")) {
+                        tmp = new File(file1.getParent() + "/" + file1.getName().replace("mod_id", modid));
                         file1.renameTo(tmp);
                         file1 = tmp;
                     } else if (file1.getName().contains("ModName")) {
@@ -65,12 +65,11 @@ public class FabricProjectGenerator {
                     }
                     if (file1.getName().endsWith(".java")
                         || file1.getName().endsWith(".json")
-                        || file1.getName().endsWith(".gradle")
                         || file1.getName().endsWith(".properties")) {
                         List<String> lines = Files.readAllLines(file1.toPath());
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file1))) {
                             for (String s : lines) {
-                                writer.write(s.replace("modid", modid).replace("Mod Desc", description).replace("Mod Name", modName).replace("ModName", modName.replace(" ", "")));
+                                writer.write(s.replace("mod_id", modid).replace("moddescription", description).replace("ModName", modName.replace(" ", "")));
                                 writer.write('\n');
                             }
                             writer.flush();
@@ -79,7 +78,7 @@ public class FabricProjectGenerator {
                 }
             }
             file.renameTo(new File(modid + '/'));
-        } catch (IOException | InterruptedException | ExecutionException exception) {
+        } catch (IOException | InterruptedException exception) {
             throw new RuntimeException(exception);
         }
     }
